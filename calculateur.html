@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculateur de prêt hypothécaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f9f9f9;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        input {
+            padding: 5px;
+            margin-top: 5px;
+            width: 200px;
+        }
+        
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #005ea6;
+        }
+        
+        p {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculateur de prêt hypothécaire</h1>
+
+    <label for="montant">Montant du prêt (MRU) :</label>
+    <input type="number" id="montant" placeholder="Ex : 100000">
+
+    <label for="taux">Taux d'intérêt annuel (%) :</label>
+    <input type="number" id="taux" placeholder="Ex : 5">
+
+    <label for="duree">Durée du prêt (années) :</label>
+    <input type="number" id="duree" placeholder="Ex : 20">
+
+    <button onclick="calculer()">Calculer</button>
+
+    <p id="resultat"></p>
+
+    <script>
+        function calculer() {
+
+            let P = parseFloat(document.getElementById("montant").value);
+            let tauxAnnuel = parseFloat(document.getElementById("taux").value);
+            let annees = parseInt(document.getElementById("duree").value);
+
+
+            if (isNaN(P) || P <= 0) {
+                alert("Veuillez entrer un montant de prêt valide et positif.");
+                return;
+            }
+            if (isNaN(tauxAnnuel) || tauxAnnuel <= 0) {
+                alert("Veuillez entrer un taux d'intérêt annuel valide (> 0).");
+                return;
+            }
+            if (isNaN(annees) || annees <= 0) {
+                alert("Veuillez entrer une durée valide (en années).");
+                return;
+            }
+
+            let r = (tauxAnnuel / 100) / 12;
+            let n = annees * 12;
+            let M = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+
+            document.getElementById("resultat").innerText =
+                "Paiement mensuel : " + M.toFixed(2) + " MRU";
+        }
+    </script>
+</body>
+
+</html>
